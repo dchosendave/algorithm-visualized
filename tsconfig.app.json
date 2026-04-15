@@ -6,6 +6,7 @@
     "module": "esnext",
     "types": ["vite/client"],
     "skipLibCheck": true,
+    "ignoreDeprecations": "6.0", // ignore typescript 7.0 warning for baseUrl
 
     /* custom added */
     "baseUrl": ".",
