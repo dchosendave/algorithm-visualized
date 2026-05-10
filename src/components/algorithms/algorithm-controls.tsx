@@ -1,8 +1,11 @@
 import { Pause, Play, RotateCcw, Shuffle, SkipForward } from "lucide-react"
+import { motion } from "motion/react"
 
 import { Button } from "@/components/ui/button"
 import { Slider } from "@/components/ui/slider"
 import { formatMilliseconds } from "@/lib/format"
+
+const MotionButton = motion(Button)
 
 type AlgorithmControlsProps = {
   isPlaying: boolean
@@ -28,12 +31,18 @@ export function AlgorithmControls({
   return (
     <div className="space-y-5">
       <div className="flex flex-wrap gap-3">
-        <Button onClick={onTogglePlay} size="sm" type="button">
+        <MotionButton
+          whileTap={{ scale: 0.95 }}
+          onClick={onTogglePlay}
+          size="sm"
+          type="button"
+        >
           {isPlaying ? <Pause /> : <Play />}
           {isPlaying ? "Pause" : "Play"}
-        </Button>
+        </MotionButton>
 
-        <Button
+        <MotionButton
+          whileTap={{ scale: 0.95 }}
           onClick={onStep}
           size="sm"
           type="button"
@@ -42,17 +51,29 @@ export function AlgorithmControls({
         >
           <SkipForward />
           Step
-        </Button>
+        </MotionButton>
 
-        <Button onClick={onReset} size="sm" type="button" variant="outline">
+        <MotionButton
+          whileTap={{ scale: 0.95 }}
+          onClick={onReset}
+          size="sm"
+          type="button"
+          variant="outline"
+        >
           <RotateCcw />
           Reset
-        </Button>
+        </MotionButton>
 
-        <Button onClick={onRandomize} size="sm" type="button" variant="secondary">
+        <MotionButton
+          whileTap={{ scale: 0.95 }}
+          onClick={onRandomize}
+          size="sm"
+          type="button"
+          variant="secondary"
+        >
           <Shuffle />
           Randomize
-        </Button>
+        </MotionButton>
       </div>
 
       <div className="space-y-2">

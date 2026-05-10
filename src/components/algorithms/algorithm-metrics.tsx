@@ -1,3 +1,5 @@
+import { AnimatePresence, motion } from "motion/react"
+
 import type { AlgorithmStep } from "@/algorithms/types"
 
 type AlgorithmMetricsProps = {
@@ -53,9 +55,18 @@ export function AlgorithmMetrics({
           <span className="block text-xs uppercase tracking-[0.16em] text-muted-foreground">
             {item.label}
           </span>
-          <span className="mt-2 block text-2xl font-semibold tracking-tight">
-            {item.value}
-          </span>
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={String(item.value)}
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -5 }}
+              transition={{ duration: 0.15, ease: "easeOut" }}
+              className="mt-2 block text-2xl font-semibold tracking-tight"
+            >
+              {item.value}
+            </motion.span>
+          </AnimatePresence>
         </div>
       ))}
     </div>

@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router"
-
 import { SiteHeader } from "@/components/app/site-header"
 import { AlgorithmDetailPage } from "@/pages/algorithm-detail-page"
 import { AlgorithmsPage } from "@/pages/algorithms-page"

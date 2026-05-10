@@ -1,4 +1,5 @@
 import { MoonStar, SunMedium } from "lucide-react"
+import { AnimatePresence, motion } from "motion/react"
 import { Link, NavLink } from "react-router"
 
 import { PageContainer } from "@/components/app/page-container"
@@ -49,16 +50,33 @@ export function SiteHeader() {
                 key={item.to}
                 to={item.to}
                 end={item.end}
-                className={({ isActive }) =>
-                  cn(
-                    "rounded-full px-3 py-2 text-sm font-medium transition-colors",
-                    isActive
-                      ? "bg-foreground text-background"
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                  )
-                }
+                className="relative rounded-full px-3 py-2 text-sm font-medium"
               >
-                {item.label}
+                {({ isActive }) => (
+                  <>
+                    {isActive && (
+                      <motion.span
+                        layoutId="nav-pill"
+                        className="absolute inset-0 rounded-full bg-foreground"
+                        transition={{
+                          type: "spring",
+                          stiffness: 380,
+                          damping: 32,
+                        }}
+                      />
+                    )}
+                    <span
+                      className={cn(
+                        "relative z-10",
+                        isActive
+                          ? "text-background"
+                          : "text-muted-foreground hover:text-foreground"
+                      )}
+                    >
+                      {item.label}
+                    </span>
+                  </>
+                )}
               </NavLink>
             ))}
           </nav>
@@ -71,7 +89,18 @@ export function SiteHeader() {
             aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
             title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
           >
-            {theme === "dark" ? <SunMedium /> : <MoonStar />}
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={theme}
+                initial={{ opacity: 0, rotate: -30 }}
+                animate={{ opacity: 1, rotate: 0 }}
+                exit={{ opacity: 0, rotate: 30 }}
+                transition={{ duration: 0.2 }}
+                className="flex items-center justify-center"
+              >
+                {theme === "dark" ? <SunMedium /> : <MoonStar />}
+              </motion.span>
+            </AnimatePresence>
           </Button>
         </div>
       </PageContainer>

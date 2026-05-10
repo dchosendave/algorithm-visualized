@@ -1,3 +1,5 @@
+import { AnimatePresence, motion } from "motion/react"
+
 import type { AlgorithmStep } from "@/algorithms/types"
 import type { AlgorithmSummary } from "@/data/algorithm-content"
 import { formatArray } from "@/lib/format"
@@ -19,9 +21,18 @@ export function AlgorithmExplanation({
         <p className="text-sm font-medium uppercase tracking-[0.16em] text-muted-foreground">
           Current step
         </p>
-        <p className="text-sm leading-7">
-          {step?.message ?? "Press Play to start the visualization."}
-        </p>
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={step?.message ?? "idle"}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="text-sm leading-7"
+          >
+            {step?.message ?? "Press Play to start the visualization."}
+          </motion.p>
+        </AnimatePresence>
       </div>
 
       <div className="space-y-2">

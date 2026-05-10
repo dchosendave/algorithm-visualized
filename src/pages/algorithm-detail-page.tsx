@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react"
+import { motion } from "motion/react"
 import { Link, useParams } from "react-router"
 
 import { getSearchAlgorithm, getSortingAlgorithm } from "@/algorithms/registry"
@@ -413,7 +414,12 @@ export function AlgorithmDetailPage() {
 
   return (
     <PageContainer className="space-y-8 py-10 sm:py-14">
-      <div className="space-y-4">
+      <motion.div
+        className="space-y-4"
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, ease: "easeOut" }}
+      >
         <Link
           to="/algorithms"
           className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
@@ -422,14 +428,19 @@ export function AlgorithmDetailPage() {
         </Link>
 
         <div className="space-y-3">
-          <div className="flex flex-wrap items-center gap-2">
+          <motion.div
+            className="flex flex-wrap items-center gap-2"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+          >
             <Badge variant="secondary">{algorithm.kind}</Badge>
             {isInteractiveSort || isInteractiveSearch ? (
               <Badge variant="outline">Interactive</Badge>
             ) : (
               <Badge variant="outline">Coming next</Badge>
             )}
-          </div>
+          </motion.div>
 
           <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
             {algorithm.name}
@@ -439,7 +450,7 @@ export function AlgorithmDetailPage() {
             {algorithm.description}
           </p>
         </div>
-      </div>
+      </motion.div>
 
       {isInteractiveSort ? (
         <SortingAlgorithmExperience algorithm={algorithm} />
